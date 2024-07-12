@@ -27,6 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using static Rainbow.ImgLib.Formats.Implementation.TIM2Texture;
 
 namespace Rainbow.ImgLib.Formats.Implementation
 {
@@ -152,6 +153,24 @@ namespace Rainbow.ImgLib.Formats.Implementation
             metadata.EndSection();
         }
 
+        public void ExportNoMetadata(TextureFormat texture, string directory, string basename)
+        {
+
+            TIM2Texture tim2 = texture as TIM2Texture;
+            if (tim2 == null)
+            {
+                throw new TextureFormatException("Not a valid TIM2Texture!");
+            }
+
+            int layer = 0;
+            foreach (TIM2Segment segment in tim2.TIM2SegmentsList)
+            {
+                TIM2SegmentSerializer serializer = new TIM2SegmentSerializer();
+                serializer.ExportNoMetadata(segment, directory, basename + "_layer" + layer++);
+            }
+
+        }
+
         public TextureFormat Import(MetadataReader metadata, string directory)
         {
             TIM2Texture tim2=null;
@@ -198,6 +217,103 @@ namespace Rainbow.ImgLib.Formats.Implementation
             return tim2;
         }
 
+        public TextureFormat ImportOver(TextureFormat texture, string image_name, int alignment, int bitdepth, int width, int height)
+        {
+            TIM2Texture tim2 = texture as TIM2Texture;
+            if (tim2 == null)
+            {
+                throw new TextureFormatException("Not a valid TIM2Texture!");
+            }
+
+            try
+            {
+
+                int version = tim2.Version;
+                //int alignment = (int)tim2.Alignment;
+                bool swizzled = tim2.Swizzled;
+                int textureCount = tim2.TIM2SegmentsList.Count;
+
+                List<TIM2Segment> imagesList = new List<TIM2Segment>();
+
+                for (int i = 0; i < textureCount; i++)
+                {
+                    TIM2Segment segment = (TIM2Segment)new TIM2SegmentSerializer(swizzled).ImportOver(tim2, bitdepth, image_name, width, height);
+                    imagesList.Add(segment);
+                }
+
+                //metadata.ExitSection();
+                tim2 = new TIM2Texture(imagesList);
+                tim2.Version = version;
+                tim2.Alignment = alignment==16? TIM2Texture.TIM2ByteAlignment.Align16bytes : TIM2Texture.TIM2ByteAlignment.Align128Bytes;
+            }
+            catch (FormatException e)
+            {
+                throw new TextureFormatException("Cannot parse value!\n" + e.Message, e);
+            }
+            catch (XmlException e)
+            {
+                throw new TextureFormatException("Not valid metadata!\n" + e.Message, e);
+            }
+            catch (TextureFormatException e)
+            {
+                throw new TextureFormatException(e.Message, e);
+            }
+            catch (Exception e)
+            {
+                throw new TextureFormatException("Error:\n" + e.Message, e);
+            }
+
+            return tim2;
+        }
+
+        public TextureFormat Update(TextureFormat texture, TIM2ByteAlignment alignment, int bitdepth)
+        {
+            TIM2Texture tim2 = texture as TIM2Texture;
+            if (tim2 == null)
+            {
+                throw new TextureFormatException("Not a valid TIM2Texture!");
+            }
+
+            try
+            {
+
+                int version = tim2.Version;
+                //int alignment = (int)tim2.Alignment;
+                bool swizzled = tim2.Swizzled;
+                int textureCount = tim2.TIM2SegmentsList.Count;
+
+                List<TIM2Segment> imagesList = new List<TIM2Segment>();
+
+                for (int i = 0; i < textureCount; i++)
+                {
+                    TIM2Segment segment = (TIM2Segment)new TIM2SegmentSerializer(swizzled).SelfImport(tim2, bitdepth);
+                    imagesList.Add(segment);
+                }
+
+                //metadata.ExitSection();
+                tim2 = new TIM2Texture(imagesList);
+                tim2.Version = version;
+                tim2.Alignment = alignment;
+            }
+            catch (FormatException e)
+            {
+                throw new TextureFormatException("Cannot parse value!\n" + e.Message, e);
+            }
+            catch (XmlException e)
+            {
+                throw new TextureFormatException("Not valid metadata!\n" + e.Message, e);
+            }
+            catch (TextureFormatException e)
+            {
+                throw new TextureFormatException(e.Message, e);
+            }
+            catch (Exception e)
+            {
+                throw new TextureFormatException("Error:\n" + e.Message, e);
+            }
+
+            return tim2;
+        }
         private void ReadHeader(Stream stream, out int version, out int alignment, out int textureCount)
         {
             BinaryReader reader = new BinaryReader(stream);
@@ -307,6 +423,28 @@ namespace Rainbow.ImgLib.Formats.Implementation
             }
         }
 
+        public void ExportNoMetadata(TextureFormat texture, string directory, string basename)
+        {
+            TIM2Segment segment = texture as TIM2Segment;
+            if (segment == null)
+            {
+                throw new TextureFormatException("Not A valid TIM2Segment!");
+            }
+            int i = 0;
+            Image referenceImage = null;
+            List<Image> images = ConstructImages(segment, out referenceImage);
+
+            foreach (Image img in images)
+            {
+                img.Save(Path.Combine(directory, basename + "_" + i++ + ".png"));
+            }
+
+            if (referenceImage != null)
+            {
+                referenceImage.Save(Path.Combine(directory, basename + "_reference.png"));
+            }
+
+        }
         public TextureFormat Import(MetadataReader metadata, string directory)
         {
             TIM2Segment segment = null;
@@ -326,6 +464,65 @@ namespace Rainbow.ImgLib.Formats.Implementation
             else
             {
                 segment = new TIM2Segment(images.First(), null, parameters);
+            }
+
+            return segment;
+        }
+
+        public TextureFormat ImportOver(TIM2Texture tim2, int bitdepth, string image_name, int width, int height)
+        {
+            TIM2Segment segment = tim2.TIM2SegmentsList[0]; // hack
+
+            segment.SetWidthHeight(width, height);
+            segment.Bpp = bitdepth;
+
+            Image referenceImage = null;
+            string directory = Path.GetDirectoryName(image_name);
+            List<Image> images = ReadSingleImageData(directory, image_name, segment.PalettesCount, out referenceImage);
+
+            segment = new TIM2Segment(images.First(), null, segment.GetParameters());
+
+            return segment;
+        }
+
+        public TextureFormat SelfImport(TIM2Texture tim2, int bitdepth) // this is so dumb
+        {
+            TIM2Segment segment = tim2.TIM2SegmentsList[0]; // hack
+
+
+            //TIM2Segment segment = texture as TIM2Segment;
+            //if (segment == null)
+            //{
+            //    throw new TextureFormatException("Not A valid TIM2Segment!");
+            //}
+
+            segment.Bpp = bitdepth;
+            Image referenceImage = null;
+            List<Image> images = ConstructImages(segment, out referenceImage);
+            //referenceImage.Save(Path.Combine(directory, basename + "_reference.png"));
+
+            //foreach (Image img in images)
+            //{
+            //    img.Save(Path.Combine(directory, basename + "_" + i++ + ".png"));
+            //}
+
+            //if (referenceImage != null)
+            //{
+            //    referenceImage.Save(Path.Combine(directory, basename + "_reference.png"));
+            //}
+
+
+            //Image referenceImage = null;
+            //string directory = Path.GetDirectoryName(image_name);
+            //List<Image> images = ReadSingleImageData(directory, image_name, segment.PalettesCount, out referenceImage);
+
+            if (referenceImage != null)
+            {
+                segment = new TIM2Segment(referenceImage, images.Select(img => img.GetColorArray()).ToList(), segment.GetParameters());
+            }
+            else
+            {
+                segment = new TIM2Segment(images.First(), null, segment.GetParameters());
             }
 
             return segment;
@@ -356,6 +553,17 @@ namespace Rainbow.ImgLib.Formats.Implementation
             segment.SelectedPalette = oldSelected;
 
             return list;
+        }
+
+        private List<Image> ReadSingleImageData(string directory, string basename, int palCount, out Image referenceImage)
+        {
+            referenceImage = null;
+
+            List<Image> images = new List<Image>();
+            string file = Path.Combine(directory, basename);
+            images.Add(Image.FromFile(file));
+
+            return images;
         }
 
         private List<Image> ReadImageData(string directory, string basename, int palCount, out Image referenceImage)

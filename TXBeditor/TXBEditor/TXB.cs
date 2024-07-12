@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rainbow.ImgLib.Formats.Implementation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,6 +10,9 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static Rainbow.ImgLib.Formats.Implementation.TIM2Texture;
+using Rainbow.ImgLib.Formats.Serialization;
+using Rainbow.ImgLib.Formats;
 
 namespace TXBeditor.TXBEditor
 {
@@ -17,10 +21,14 @@ namespace TXBeditor.TXBEditor
         public class ImageInfo
         {
             public int load_index { get; set; }
+            public int bit_depth { get; set; }
+            public int byte_alignment { get; set; }
             public required byte[] byte_array { get; set; }
         }
 
-        static public List<ImageInfo> LoadFromFile(string file_path)
+
+
+        static public List<ImageInfo> LoadFromFile(TextureFormatSerializer serializer, string file_path)
         {
             List<ImageInfo> image_list = new List<ImageInfo>();
 
@@ -64,6 +72,8 @@ namespace TXBeditor.TXBEditor
                         image_list.Add(new ImageInfo()
                         {
                             load_index = image_id,
+                            bit_depth = ImgLib_GetBPP(serializer, image_buffer),
+                            byte_alignment = GetAlignment(TIM2_alignment), //16 if byte is 0, else it's 128
                             byte_array = image_buffer
                         });
 
@@ -72,6 +82,19 @@ namespace TXBeditor.TXBEditor
                 }
             }
             return image_list;
+        }
+
+        static public int GetAlignment(byte value)
+        {
+            return value == 0 ? 16 : 128; //16 if byte is 0, else it's 128
+        }
+        
+        static public int ImgLib_GetBPP(TextureFormatSerializer serializer, byte[] image_buffer)
+        {
+            MemoryStream TIM2_stream = new MemoryStream(image_buffer);
+            serializer = TextureFormatSerializerProvider.FromStream(TIM2_stream);
+            TIM2Texture texture = serializer.Open(TIM2_stream) as TIM2Texture;
+            return texture.Bpp;
         }
 
         static public void WriteOutputData(BinaryWriter writer, List<ImageInfo> image_list)

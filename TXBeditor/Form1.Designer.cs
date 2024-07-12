@@ -29,11 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            ListViewItem listViewItem11 = new ListViewItem(new string[] { "Width", "N/A" }, -1);
-            ListViewItem listViewItem12 = new ListViewItem(new string[] { "Height", "N/A" }, -1);
-            ListViewItem listViewItem13 = new ListViewItem(new string[] { "Byte Alignment", "N/A" }, -1);
-            ListViewItem listViewItem14 = new ListViewItem(new string[] { "Bit Depth", "N/A" }, -1);
-            ListViewItem listViewItem15 = new ListViewItem(new string[] { "Bytes Per Color", "N/A" }, -1);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             ImageListView = new ListView();
             image_index = new ColumnHeader();
             image_id = new ColumnHeader();
@@ -46,9 +42,10 @@
             ImageListRemove = new Button();
             GroupBoxTXB = new GroupBox();
             GroupBoxTIM2 = new GroupBox();
-            TIM2DataListView = new ListView();
-            Property = new ColumnHeader();
-            Value = new ColumnHeader();
+            BPPLabel = new Label();
+            AlignmentLabel = new Label();
+            ComboAlignment = new ComboBox();
+            ComboBitDepth = new ComboBox();
             toolStrip1 = new ToolStrip();
             StripFile = new ToolStripDropDownButton();
             StripFileOpen = new ToolStripMenuItem();
@@ -66,6 +63,7 @@
             StripHelp = new ToolStripDropDownButton();
             StripHelpImgLib = new ToolStripMenuItem();
             toolTip1 = new ToolTip(components);
+            ImageListSave = new Button();
             GroupBoxImageList = new GroupBox();
             GroupBoxView = new GroupBox();
             ViewZoomReset = new Button();
@@ -96,7 +94,7 @@
             ImageListView.Location = new Point(6, 14);
             ImageListView.MultiSelect = false;
             ImageListView.Name = "ImageListView";
-            ImageListView.Size = new Size(180, 237);
+            ImageListView.Size = new Size(180, 297);
             ImageListView.TabIndex = 1;
             ImageListView.UseCompatibleStateImageBehavior = false;
             ImageListView.View = View.Details;
@@ -144,9 +142,9 @@
             // ImageListPushUp
             // 
             ImageListPushUp.Image = Properties.Resources.arrow_up;
-            ImageListPushUp.Location = new Point(192, 145);
+            ImageListPushUp.Location = new Point(192, 221);
             ImageListPushUp.Name = "ImageListPushUp";
-            ImageListPushUp.Size = new Size(26, 50);
+            ImageListPushUp.Size = new Size(26, 42);
             ImageListPushUp.TabIndex = 9;
             toolTip1.SetToolTip(ImageListPushUp, "Move the currently selected texture up");
             ImageListPushUp.UseVisualStyleBackColor = true;
@@ -155,9 +153,9 @@
             // ImageListPushDown
             // 
             ImageListPushDown.Image = Properties.Resources.arrow_down;
-            ImageListPushDown.Location = new Point(192, 201);
+            ImageListPushDown.Location = new Point(192, 269);
             ImageListPushDown.Name = "ImageListPushDown";
-            ImageListPushDown.Size = new Size(26, 50);
+            ImageListPushDown.Size = new Size(26, 42);
             ImageListPushDown.TabIndex = 10;
             toolTip1.SetToolTip(ImageListPushDown, "Move the currently selected texture down");
             ImageListPushDown.UseVisualStyleBackColor = true;
@@ -168,7 +166,7 @@
             ImageListAdd.Image = Properties.Resources.image_add;
             ImageListAdd.Location = new Point(192, 14);
             ImageListAdd.Name = "ImageListAdd";
-            ImageListAdd.Size = new Size(26, 50);
+            ImageListAdd.Size = new Size(26, 42);
             ImageListAdd.TabIndex = 13;
             toolTip1.SetToolTip(ImageListAdd, "Add a new TIM2 (.tm2) texture to the TXB image list");
             ImageListAdd.UseVisualStyleBackColor = true;
@@ -177,9 +175,9 @@
             // ImageListRemove
             // 
             ImageListRemove.Image = Properties.Resources.image_delete;
-            ImageListRemove.Location = new Point(192, 70);
+            ImageListRemove.Location = new Point(192, 62);
             ImageListRemove.Name = "ImageListRemove";
-            ImageListRemove.Size = new Size(26, 50);
+            ImageListRemove.Size = new Size(26, 42);
             ImageListRemove.TabIndex = 14;
             ImageListRemove.Text = "-";
             toolTip1.SetToolTip(ImageListRemove, "Remove the currently selected texture from the image list");
@@ -191,7 +189,7 @@
             GroupBoxTXB.Controls.Add(CurrImgIDField);
             GroupBoxTXB.Controls.Add(label1);
             GroupBoxTXB.Enabled = false;
-            GroupBoxTXB.Location = new Point(12, 284);
+            GroupBoxTXB.Location = new Point(12, 344);
             GroupBoxTXB.Name = "GroupBoxTXB";
             GroupBoxTXB.Size = new Size(224, 51);
             GroupBoxTXB.TabIndex = 15;
@@ -200,41 +198,59 @@
             // 
             // GroupBoxTIM2
             // 
-            GroupBoxTIM2.Controls.Add(TIM2DataListView);
+            GroupBoxTIM2.Controls.Add(BPPLabel);
+            GroupBoxTIM2.Controls.Add(AlignmentLabel);
+            GroupBoxTIM2.Controls.Add(ComboAlignment);
+            GroupBoxTIM2.Controls.Add(ComboBitDepth);
             GroupBoxTIM2.Enabled = false;
-            GroupBoxTIM2.Location = new Point(12, 347);
+            GroupBoxTIM2.Location = new Point(12, 401);
             GroupBoxTIM2.Name = "GroupBoxTIM2";
-            GroupBoxTIM2.Size = new Size(224, 134);
+            GroupBoxTIM2.Size = new Size(224, 80);
             GroupBoxTIM2.TabIndex = 16;
             GroupBoxTIM2.TabStop = false;
             GroupBoxTIM2.Text = "TIM2 Specific";
             // 
-            // TIM2DataListView
+            // BPPLabel
             // 
-            TIM2DataListView.Columns.AddRange(new ColumnHeader[] { Property, Value });
-            TIM2DataListView.Enabled = false;
-            TIM2DataListView.FullRowSelect = true;
-            TIM2DataListView.GridLines = true;
-            TIM2DataListView.HeaderStyle = ColumnHeaderStyle.None;
-            TIM2DataListView.Items.AddRange(new ListViewItem[] { listViewItem11, listViewItem12, listViewItem13, listViewItem14, listViewItem15 });
-            TIM2DataListView.LabelWrap = false;
-            TIM2DataListView.Location = new Point(8, 22);
-            TIM2DataListView.MultiSelect = false;
-            TIM2DataListView.Name = "TIM2DataListView";
-            TIM2DataListView.Scrollable = false;
-            TIM2DataListView.Size = new Size(210, 98);
-            TIM2DataListView.TabIndex = 0;
-            TIM2DataListView.UseCompatibleStateImageBehavior = false;
-            TIM2DataListView.View = View.Details;
+            BPPLabel.AutoSize = true;
+            BPPLabel.Location = new Point(8, 53);
+            BPPLabel.Name = "BPPLabel";
+            BPPLabel.Size = new Size(56, 15);
+            BPPLabel.TabIndex = 3;
+            BPPLabel.Text = "Bit Depth";
             // 
-            // Property
+            // AlignmentLabel
             // 
-            Property.Text = "ColumnaHeader";
-            Property.Width = 128;
+            AlignmentLabel.AutoSize = true;
+            AlignmentLabel.Location = new Point(8, 24);
+            AlignmentLabel.Name = "AlignmentLabel";
+            AlignmentLabel.Size = new Size(89, 15);
+            AlignmentLabel.TabIndex = 2;
+            AlignmentLabel.Text = "Byte Alignment";
             // 
-            // Value
+            // ComboAlignment
             // 
-            Value.Width = 93;
+            ComboAlignment.DropDownStyle = ComboBoxStyle.DropDownList;
+            ComboAlignment.Enabled = false;
+            ComboAlignment.FormattingEnabled = true;
+            ComboAlignment.Items.AddRange(new object[] { "16 Bytes", "128 Bytes" });
+            ComboAlignment.Location = new Point(115, 21);
+            ComboAlignment.Name = "ComboAlignment";
+            ComboAlignment.Size = new Size(103, 23);
+            ComboAlignment.TabIndex = 1;
+            ComboAlignment.SelectionChangeCommitted += ComboAlignmentChange;
+            // 
+            // ComboBitDepth
+            // 
+            ComboBitDepth.DropDownStyle = ComboBoxStyle.DropDownList;
+            ComboBitDepth.Enabled = false;
+            ComboBitDepth.FormattingEnabled = true;
+            ComboBitDepth.Items.AddRange(new object[] { "4 BPP", "8 BPP", "16 BPP", "24 BPP", "32 BPP" });
+            ComboBitDepth.Location = new Point(115, 50);
+            ComboBitDepth.Name = "ComboBitDepth";
+            ComboBitDepth.Size = new Size(103, 23);
+            ComboBitDepth.TabIndex = 0;
+            ComboBitDepth.SelectedIndexChanged += ComboBPPChanged;
             // 
             // toolStrip1
             // 
@@ -259,21 +275,21 @@
             // 
             StripFileOpen.Image = Properties.Resources.page_go;
             StripFileOpen.Name = "StripFileOpen";
-            StripFileOpen.Size = new Size(180, 22);
+            StripFileOpen.Size = new Size(121, 22);
             StripFileOpen.Text = "Open...";
             StripFileOpen.Click += StripFileOpen_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(118, 6);
             // 
             // StripFileSave
             // 
             StripFileSave.Enabled = false;
             StripFileSave.Image = Properties.Resources.page_save;
             StripFileSave.Name = "StripFileSave";
-            StripFileSave.Size = new Size(180, 22);
+            StripFileSave.Size = new Size(121, 22);
             StripFileSave.Text = "Save";
             StripFileSave.Click += StripFileSave_Click;
             // 
@@ -281,20 +297,20 @@
             // 
             StripFileSaveAs.Enabled = false;
             StripFileSaveAs.Name = "StripFileSaveAs";
-            StripFileSaveAs.Size = new Size(180, 22);
+            StripFileSaveAs.Size = new Size(121, 22);
             StripFileSaveAs.Text = "Save as...";
             StripFileSaveAs.Click += StripFileSaveAs_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(118, 6);
             // 
             // StripFileQuit
             // 
             StripFileQuit.Image = Properties.Resources.cancel;
             StripFileQuit.Name = "StripFileQuit";
-            StripFileQuit.Size = new Size(180, 22);
+            StripFileQuit.Size = new Size(121, 22);
             StripFileQuit.Text = "Quit";
             StripFileQuit.Click += StripFileQuit_Click;
             // 
@@ -311,32 +327,32 @@
             // StripEditExport
             // 
             StripEditExport.Enabled = false;
-            StripEditExport.Image = Properties.Resources.image;
+            StripEditExport.Image = (Image)resources.GetObject("StripEditExport.Image");
             StripEditExport.Name = "StripEditExport";
-            StripEditExport.Size = new Size(180, 22);
+            StripEditExport.Size = new Size(166, 22);
             StripEditExport.Text = "Export to PNG";
             StripEditExport.Click += StripEditExport_Click;
             // 
             // StripEditImport
             // 
             StripEditImport.Enabled = false;
-            StripEditImport.Image = Properties.Resources.image_edit;
+            StripEditImport.Image = (Image)resources.GetObject("StripEditImport.Image");
             StripEditImport.Name = "StripEditImport";
-            StripEditImport.Size = new Size(180, 22);
+            StripEditImport.Size = new Size(166, 22);
             StripEditImport.Text = "Import from PNG";
             StripEditImport.Click += StripEditImport_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(177, 6);
+            toolStripSeparator3.Size = new Size(163, 6);
             // 
             // StripEditExportAll
             // 
             StripEditExportAll.Enabled = false;
             StripEditExportAll.Image = Properties.Resources.folder_picture;
             StripEditExportAll.Name = "StripEditExportAll";
-            StripEditExportAll.Size = new Size(180, 22);
+            StripEditExportAll.Size = new Size(166, 22);
             StripEditExportAll.Text = "Batch Export";
             StripEditExportAll.Click += StripEditExportAll_Click;
             // 
@@ -345,7 +361,7 @@
             StripEditImportAll.Enabled = false;
             StripEditImportAll.Image = Properties.Resources.folder_magnify;
             StripEditImportAll.Name = "StripEditImportAll";
-            StripEditImportAll.Size = new Size(180, 22);
+            StripEditImportAll.Size = new Size(166, 22);
             StripEditImportAll.Text = "Batch Import";
             StripEditImportAll.Click += EditStripImportAll_Click;
             // 
@@ -362,12 +378,25 @@
             // StripHelpImgLib
             // 
             StripHelpImgLib.Name = "StripHelpImgLib";
-            StripHelpImgLib.Size = new Size(180, 22);
+            StripHelpImgLib.Size = new Size(147, 22);
             StripHelpImgLib.Text = "About ImgLib";
             StripHelpImgLib.Click += StripHelpImgLib_Click;
             // 
+            // ImageListSave
+            // 
+            ImageListSave.Image = (Image)resources.GetObject("ImageListSave.Image");
+            ImageListSave.Location = new Point(192, 110);
+            ImageListSave.Name = "ImageListSave";
+            ImageListSave.Size = new Size(26, 42);
+            ImageListSave.TabIndex = 15;
+            ImageListSave.Text = "-";
+            toolTip1.SetToolTip(ImageListSave, "Save the currently selected image as a TIM2 (.tm2) file");
+            ImageListSave.UseVisualStyleBackColor = true;
+            ImageListSave.Click += OnImageListSave;
+            // 
             // GroupBoxImageList
             // 
+            GroupBoxImageList.Controls.Add(ImageListSave);
             GroupBoxImageList.Controls.Add(ImageListView);
             GroupBoxImageList.Controls.Add(ImageListAdd);
             GroupBoxImageList.Controls.Add(ImageListPushDown);
@@ -376,7 +405,7 @@
             GroupBoxImageList.Enabled = false;
             GroupBoxImageList.Location = new Point(12, 21);
             GroupBoxImageList.Name = "GroupBoxImageList";
-            GroupBoxImageList.Size = new Size(224, 257);
+            GroupBoxImageList.Size = new Size(224, 317);
             GroupBoxImageList.TabIndex = 18;
             GroupBoxImageList.TabStop = false;
             // 
@@ -484,6 +513,7 @@
             GroupBoxTXB.ResumeLayout(false);
             GroupBoxTXB.PerformLayout();
             GroupBoxTIM2.ResumeLayout(false);
+            GroupBoxTIM2.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             GroupBoxImageList.ResumeLayout(false);
@@ -523,9 +553,6 @@
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripMenuItem StripEditExportAll;
         private ToolStripMenuItem StripEditImportAll;
-        private ListView TIM2DataListView;
-        private ColumnHeader Property;
-        private ColumnHeader Value;
         private ToolTip toolTip1;
         private GroupBox GroupBoxImageList;
         private GroupBox GroupBoxView;
@@ -537,5 +564,10 @@
         private Button ViewZoomAdd;
         private Button ViewZoomReset;
         private Panel panel1;
+        private Button ImageListSave;
+        private ComboBox ComboBitDepth;
+        private ComboBox ComboAlignment;
+        private Label BPPLabel;
+        private Label AlignmentLabel;
     }
 }

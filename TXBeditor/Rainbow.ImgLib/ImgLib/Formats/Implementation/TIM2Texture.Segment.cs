@@ -134,7 +134,15 @@ namespace Rainbow.ImgLib.Formats.Implementation
 
         public override int FramesCount { get { return 1; } }
 
-        public int Bpp { get { return parameters.bpp; } }
+        public int Bpp { get { return parameters.bpp; }
+            set { parameters.bpp = Convert.ToByte(value); } // set hack?
+        }
+
+        public void SetWidthHeight(int width, int height)
+        {
+            parameters.width = width;
+            parameters.height = height;
+        }
 
         internal bool Swizzled
         {

@@ -34,7 +34,7 @@ namespace Rainbow.ImgLib.Formats
 
         public abstract string Name { get;  }
         
-        public abstract int Width{ get; }
+        public abstract int Width { get; }
 
         public abstract int Height { get; }
 
