@@ -185,7 +185,7 @@ namespace TXBeditor
         {
             int image_index = ImageListView.SelectedIndices[0];
             MemoryStream tex_stream_temp = new MemoryStream();
-            
+
             byte[] TIM2_buffer = image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array;
             List<int> bpp = new List<int>() { 4, 8, 16, 24, 32 };
             int new_bpp = bpp[ComboBitDepth.SelectedIndex];
@@ -197,7 +197,7 @@ namespace TXBeditor
                 case 1:
                     new_alignment = TIM2ByteAlignment.Align128Bytes; break;
             }
-            
+
             TextureFormat TIM2 = GetTexture(TIM2_buffer);
             TextureFormat texture = tim2_serializer.Update(TIM2, new_alignment, new_bpp);
             serializer.Save(texture, tex_stream_temp);
@@ -655,9 +655,9 @@ namespace TXBeditor
 
             List<int> bpp = new List<int>() { 4, 8, 16, 24, 32 };
             int new_bpp = bpp[ComboBitDepth.SelectedIndex];
-            
+
             ImageInfo current_image = image_list.ElementAt(ImageListView.SelectedIndices[0]);
-            
+
             if (new_bpp < current_image.bit_depth)
             {
                 DialogResult dialogResult = MessageBox.Show("Lowering Bit Depth will result in quality loss. Proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
