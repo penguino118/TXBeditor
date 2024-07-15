@@ -224,7 +224,7 @@ namespace TXBeditor
             {
                 int new_index = ImageListView.SelectedIndices[0] + difference;
 
-                if (new_index >= 0 && new_index <= ImageListView.Items.Count)
+                if (new_index >= 0 && new_index < ImageListView.Items.Count)
                 {
                     TXB.ImageInfo selected = image_list.ElementAt(ImageListView.SelectedIndices[0]);
 
@@ -311,7 +311,30 @@ namespace TXBeditor
             }
         }
 
+        private void OnImageListSave(object sender, EventArgs e)
+        {
+            if (ImageListView.SelectedItems != null && ImageListView.SelectedIndices.Count > 0)
+            {
+                byte[] tim2_bytes = image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array;
 
+                ImageInfo current_image = image_list.ElementAt(ImageListView.SelectedIndices[0]);
+                string initial_output_name = Path.GetFileNameWithoutExtension(input_file) + "_image_" + current_image.load_index.ToString();
+                sfd.Title = "Save texture to TIM2";
+                sfd.Filter = "TIM2 texture|*.tm2";
+                sfd.FileName = initial_output_name;
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    string output_texture = sfd.FileName;
+                    if (output_texture is null)
+                    {
+                        MessageBox.Show("The output path for the texture is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    File.WriteAllBytes(output_texture, tim2_bytes);
+                }
+            }
+        }
 
         private void EnableUIGroupBoxes()
         {
@@ -540,10 +563,7 @@ namespace TXBeditor
                             ImgLib_ImportTIM2(current_image.byte_array, file, index);
                             replaced_count++;
                         }
-                        else
-                        {
-                            index++;
-                        }
+                        index++;
                     }
                 }
                 MessageBox.Show("Replaced " + replaced_count + " texture(s).", "Batch Import", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -606,30 +626,7 @@ namespace TXBeditor
             }
         }
 
-        private void OnImageListSave(object sender, EventArgs e)
-        {
-            if (ImageListView.SelectedItems != null && ImageListView.SelectedIndices.Count > 0)
-            {
-                byte[] tim2_bytes = image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array;
-
-                ImageInfo current_image = image_list.ElementAt(ImageListView.SelectedIndices[0]);
-                string initial_output_name = Path.GetFileNameWithoutExtension(input_file) + "_image_" + current_image.load_index.ToString();
-                sfd.Title = "Save texture to TIM2";
-                sfd.Filter = "TIM2 texture|*.tm2";
-                sfd.FileName = initial_output_name;
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    string output_texture = sfd.FileName;
-                    if (output_texture is null)
-                    {
-                        MessageBox.Show("The output path for the texture is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    File.WriteAllBytes(output_texture, tim2_bytes);
-                }
-            }
-        }
+        
 
         private void ComboAlignmentChange(object sender, EventArgs e)
         {
