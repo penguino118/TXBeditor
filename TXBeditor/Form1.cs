@@ -413,7 +413,7 @@ namespace TXBeditor
         private void StripFileSave_Click(object sender, EventArgs e)
         {
 
-            if (output_file is null)
+            if (input_file is null)
             {
                 MessageBox.Show("The ouput path for the file is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
