@@ -281,7 +281,6 @@ namespace TXBeditor
                             byte_array = image_buffer
                         });
                         SetListFromImageList();
-                        UpdateTIM2PropertyList(tim2_serializer.Open(new MemoryStream(image_buffer)));
                     }
                 }
             }
@@ -446,8 +445,6 @@ namespace TXBeditor
 
                 using (var stream = File.Open(output_file, FileMode.Create))
                 {
-                    List<byte> output_data = new List<byte>();
-
                     using (var writer = new BinaryWriter(stream))
                     {
                         TXB.WriteOutputData(writer, image_list);
