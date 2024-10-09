@@ -33,6 +33,7 @@
             toolStrip1 = new ToolStrip();
             StripFile = new ToolStripDropDownButton();
             StripFileOpen = new ToolStripMenuItem();
+            StripFileOpenAFS = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             StripFileSave = new ToolStripMenuItem();
             StripFileSaveAs = new ToolStripMenuItem();
@@ -75,7 +76,6 @@
             TIM2PictureBox = new PictureBox();
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
-            StripFileOpenAFS = new ToolStripMenuItem();
             toolStrip1.SuspendLayout();
             StripBGContextMenu.SuspendLayout();
             GroupBoxImageList.SuspendLayout();
@@ -107,7 +107,7 @@
             // 
             StripFile.AutoToolTip = false;
             StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileOpenAFS, toolStripSeparator2, StripFileSave, StripFileSaveAs, toolStripSeparator1, StripFileQuit });
-            StripFile.Image = Properties.Resources.folder_go;
+            StripFile.Image = TXBeditor.Properties.Resources.folder_go;
             StripFile.ImageTransparentColor = Color.Magenta;
             StripFile.Name = "StripFile";
             StripFile.Size = new Size(54, 22);
@@ -115,23 +115,32 @@
             // 
             // StripFileOpen
             // 
-            StripFileOpen.Image = Properties.Resources.page_go;
+            StripFileOpen.Image = TXBeditor.Properties.Resources.page_go;
             StripFileOpen.Name = "StripFileOpen";
-            StripFileOpen.Size = new Size(180, 22);
+            StripFileOpen.ShortcutKeys = Keys.Control | Keys.O;
+            StripFileOpen.Size = new Size(184, 22);
             StripFileOpen.Text = "Open...";
             StripFileOpen.Click += StripFileOpen_Click;
+            // 
+            // StripFileOpenAFS
+            // 
+            StripFileOpenAFS.Name = "StripFileOpenAFS";
+            StripFileOpenAFS.Size = new Size(184, 22);
+            StripFileOpenAFS.Text = "Load From AFS...";
+            StripFileOpenAFS.Click += StripFileOpenAFS_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(181, 6);
             // 
             // StripFileSave
             // 
             StripFileSave.Enabled = false;
-            StripFileSave.Image = Properties.Resources.page_save;
+            StripFileSave.Image = TXBeditor.Properties.Resources.page_save;
             StripFileSave.Name = "StripFileSave";
-            StripFileSave.Size = new Size(180, 22);
+            StripFileSave.ShortcutKeys = Keys.Control | Keys.S;
+            StripFileSave.Size = new Size(184, 22);
             StripFileSave.Text = "Save";
             StripFileSave.Click += StripFileSave_Click;
             // 
@@ -139,20 +148,21 @@
             // 
             StripFileSaveAs.Enabled = false;
             StripFileSaveAs.Name = "StripFileSaveAs";
-            StripFileSaveAs.Size = new Size(180, 22);
+            StripFileSaveAs.ShortcutKeys = Keys.Control | Keys.Alt | Keys.S;
+            StripFileSaveAs.Size = new Size(184, 22);
             StripFileSaveAs.Text = "Save as...";
             StripFileSaveAs.Click += StripFileSaveAs_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(181, 6);
             // 
             // StripFileQuit
             // 
-            StripFileQuit.Image = Properties.Resources.cancel;
+            StripFileQuit.Image = TXBeditor.Properties.Resources.cancel;
             StripFileQuit.Name = "StripFileQuit";
-            StripFileQuit.Size = new Size(180, 22);
+            StripFileQuit.Size = new Size(184, 22);
             StripFileQuit.Text = "Quit";
             StripFileQuit.Click += StripFileQuit_Click;
             // 
@@ -160,7 +170,7 @@
             // 
             StripEdit.AutoToolTip = false;
             StripEdit.DropDownItems.AddRange(new ToolStripItem[] { StripEditExport, StripEditImport, toolStripSeparator3, StripEditExportAll, StripEditImportAll });
-            StripEdit.Image = Properties.Resources.picture_edit;
+            StripEdit.Image = TXBeditor.Properties.Resources.picture_edit;
             StripEdit.ImageTransparentColor = Color.Magenta;
             StripEdit.Name = "StripEdit";
             StripEdit.Size = new Size(56, 22);
@@ -171,7 +181,7 @@
             StripEditExport.Enabled = false;
             StripEditExport.Image = (Image)resources.GetObject("StripEditExport.Image");
             StripEditExport.Name = "StripEditExport";
-            StripEditExport.Size = new Size(166, 22);
+            StripEditExport.Size = new Size(180, 22);
             StripEditExport.Text = "Export to PNG";
             StripEditExport.Click += StripEditExport_Click;
             // 
@@ -180,30 +190,30 @@
             StripEditImport.Enabled = false;
             StripEditImport.Image = (Image)resources.GetObject("StripEditImport.Image");
             StripEditImport.Name = "StripEditImport";
-            StripEditImport.Size = new Size(166, 22);
+            StripEditImport.Size = new Size(180, 22);
             StripEditImport.Text = "Import from PNG";
             StripEditImport.Click += StripEditImport_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(163, 6);
+            toolStripSeparator3.Size = new Size(177, 6);
             // 
             // StripEditExportAll
             // 
             StripEditExportAll.Enabled = false;
-            StripEditExportAll.Image = Properties.Resources.folder_picture;
+            StripEditExportAll.Image = TXBeditor.Properties.Resources.folder_picture;
             StripEditExportAll.Name = "StripEditExportAll";
-            StripEditExportAll.Size = new Size(166, 22);
+            StripEditExportAll.Size = new Size(180, 22);
             StripEditExportAll.Text = "Batch Export";
             StripEditExportAll.Click += StripEditExportAll_Click;
             // 
             // StripEditImportAll
             // 
             StripEditImportAll.Enabled = false;
-            StripEditImportAll.Image = Properties.Resources.folder_magnify;
+            StripEditImportAll.Image = TXBeditor.Properties.Resources.folder_magnify;
             StripEditImportAll.Name = "StripEditImportAll";
-            StripEditImportAll.Size = new Size(166, 22);
+            StripEditImportAll.Size = new Size(180, 22);
             StripEditImportAll.Text = "Batch Import";
             StripEditImportAll.Click += EditStripImportAll_Click;
             // 
@@ -211,7 +221,7 @@
             // 
             StripHelp.AutoToolTip = false;
             StripHelp.DropDownItems.AddRange(new ToolStripItem[] { StripHelpImgLib });
-            StripHelp.Image = Properties.Resources.information;
+            StripHelp.Image = TXBeditor.Properties.Resources.information;
             StripHelp.ImageTransparentColor = Color.Magenta;
             StripHelp.Name = "StripHelp";
             StripHelp.Size = new Size(61, 22);
@@ -227,7 +237,7 @@
             // ImageListPushUp
             // 
             ImageListPushUp.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ImageListPushUp.Image = Properties.Resources.arrow_up;
+            ImageListPushUp.Image = TXBeditor.Properties.Resources.arrow_up;
             ImageListPushUp.Location = new Point(203, 184);
             ImageListPushUp.Name = "ImageListPushUp";
             ImageListPushUp.Size = new Size(26, 50);
@@ -239,7 +249,7 @@
             // ImageListRemove
             // 
             ImageListRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ImageListRemove.Image = Properties.Resources.image_delete;
+            ImageListRemove.Image = TXBeditor.Properties.Resources.image_delete;
             ImageListRemove.Location = new Point(203, 70);
             ImageListRemove.Name = "ImageListRemove";
             ImageListRemove.Size = new Size(26, 50);
@@ -252,7 +262,7 @@
             // ImageListPushDown
             // 
             ImageListPushDown.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ImageListPushDown.Image = Properties.Resources.arrow_down;
+            ImageListPushDown.Image = TXBeditor.Properties.Resources.arrow_down;
             ImageListPushDown.Location = new Point(203, 240);
             ImageListPushDown.Name = "ImageListPushDown";
             ImageListPushDown.Size = new Size(26, 50);
@@ -264,7 +274,7 @@
             // ImageListAdd
             // 
             ImageListAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ImageListAdd.Image = Properties.Resources.image_add;
+            ImageListAdd.Image = TXBeditor.Properties.Resources.image_add;
             ImageListAdd.Location = new Point(203, 14);
             ImageListAdd.Name = "ImageListAdd";
             ImageListAdd.Size = new Size(26, 50);
@@ -294,7 +304,7 @@
             // 
             // BGColorStripDefault
             // 
-            BGColorStripDefault.Image = Properties.Resources.arrow_undo;
+            BGColorStripDefault.Image = TXBeditor.Properties.Resources.arrow_undo;
             BGColorStripDefault.Name = "BGColorStripDefault";
             BGColorStripDefault.Size = new Size(144, 22);
             BGColorStripDefault.Text = "Default Color";
@@ -302,7 +312,7 @@
             // 
             // BGColorStripCustom
             // 
-            BGColorStripCustom.Image = Properties.Resources.color_swatch;
+            BGColorStripCustom.Image = TXBeditor.Properties.Resources.color_swatch;
             BGColorStripCustom.Name = "BGColorStripCustom";
             BGColorStripCustom.Size = new Size(144, 22);
             BGColorStripCustom.Text = "Custom...";
@@ -454,7 +464,7 @@
             // 
             // ViewZoomReset
             // 
-            ViewZoomReset.Image = Properties.Resources.zoom;
+            ViewZoomReset.Image = TXBeditor.Properties.Resources.zoom;
             ViewZoomReset.Location = new Point(169, 22);
             ViewZoomReset.Name = "ViewZoomReset";
             ViewZoomReset.Size = new Size(26, 26);
@@ -464,7 +474,7 @@
             // 
             // ViewZoomSubs
             // 
-            ViewZoomSubs.Image = Properties.Resources.zoom_out;
+            ViewZoomSubs.Image = TXBeditor.Properties.Resources.zoom_out;
             ViewZoomSubs.Location = new Point(139, 22);
             ViewZoomSubs.Name = "ViewZoomSubs";
             ViewZoomSubs.Size = new Size(26, 26);
@@ -474,7 +484,7 @@
             // 
             // ViewZoomAdd
             // 
-            ViewZoomAdd.Image = Properties.Resources.zoom_in;
+            ViewZoomAdd.Image = TXBeditor.Properties.Resources.zoom_in;
             ViewZoomAdd.Location = new Point(198, 22);
             ViewZoomAdd.Name = "ViewZoomAdd";
             ViewZoomAdd.Size = new Size(26, 26);
@@ -547,13 +557,6 @@
             splitContainer2.Size = new Size(236, 511);
             splitContainer2.SplitterDistance = 302;
             splitContainer2.TabIndex = 0;
-            // 
-            // StripFileOpenAFS
-            // 
-            StripFileOpenAFS.Name = "StripFileOpenAFS";
-            StripFileOpenAFS.Size = new Size(180, 22);
-            StripFileOpenAFS.Text = "Load From AFS...";
-            StripFileOpenAFS.Click += StripFileOpenAFS_Click;
             // 
             // Form1
             // 
