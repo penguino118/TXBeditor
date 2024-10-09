@@ -36,6 +36,12 @@ namespace TXBeditor
         {
             return Math.Max(min, Math.Min(max, value));
         }
+        private void UpdateTitlebar()
+        {
+            this.Text = "TXB Editor";
+            if (input_file == "") return;
+            this.Text += " - [" + input_file + "]";
+        }
 
         public void LoadFileFromAFS(int file_index)
         {
@@ -56,6 +62,7 @@ namespace TXBeditor
                     EnableUIImportExport();
                     StripFileSave.Enabled = false;
                     StripFileSaveAs.Enabled = true;
+                    UpdateTitlebar();
                 }
             }
             catch (Exception ex)
@@ -439,6 +446,7 @@ namespace TXBeditor
                     ImageInfo current_image = image_list.ElementAt(ImageListView.SelectedIndices[0]);
                     UpdateTIM2PropertyList(tim2_serializer.Open(new MemoryStream(current_image.byte_array)));
                     EnableUIImportExport();
+                    UpdateTitlebar();
                 }
             }
         }
@@ -461,6 +469,7 @@ namespace TXBeditor
                     TXB.WriteOutputData(writer, image_list);
                 }
             }
+            UpdateTitlebar();
         }
 
         private void StripFileSaveAs_Click(object sender, EventArgs e)
@@ -489,6 +498,7 @@ namespace TXBeditor
                 {
                     StripFileSave.Enabled = true;
                 }
+                UpdateTitlebar();
             }
         }
 
