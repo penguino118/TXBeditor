@@ -16,3 +16,6 @@ The Palette construction method is modified so that the number of palettes is al
 
 ## Icon Set
 The icons used on the interface are from the [famfamfam Silk Icon pack](https://github.com/legacy-icons/famfamfam-silk), licensed under the Creative Commons Attribution 2.5 License.
+
+## AFSLib
+To load .txb files from AFS archives, [AFSLib](https://github.com/MaikelChan/AFSLib/tree/main) is used, which is licensed under the [MIT license](https://github.com/penguino118/PZZ-ARC/Tools/AFSLib/blob/main/AFSLib/LICENSE).
