@@ -13,6 +13,8 @@ using TXBeditor.TXBEditor;
 using static TXBeditor.TXBEditor.TXB;
 using static Rainbow.ImgLib.Formats.Implementation.TIM2Texture;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using AFSLib;
+using TXBeditor.TXBeditor;
 
 
 namespace TXBeditor
@@ -20,6 +22,7 @@ namespace TXBeditor
     public partial class Form1 : Form
     {
         TextureFormatSerializer serializer;
+        string afs_path = "";
         string input_file = "";
         string output_file = "";
         int texture_count = 0;
@@ -27,7 +30,7 @@ namespace TXBeditor
         List<TXB.ImageInfo> image_list = new List<TXB.ImageInfo>();
 
         TIM2TextureSerializer tim2_serializer = new TIM2TextureSerializer();
-
+        AFS current_afs = new AFS();
         readonly OpenFileDialog ofd = new OpenFileDialog();
         readonly SaveFileDialog sfd = new SaveFileDialog();
         readonly FolderPicker ffd = new FolderPicker();
@@ -43,6 +46,46 @@ namespace TXBeditor
             return Math.Max(min, Math.Min(max, value));
         }
 
+        public void LoadFileFromAFS(int file_index)
+        {
+            try
+            {
+                StreamEntry afs_file = current_afs.Entries[file_index] as StreamEntry;
+                Stream filestream = afs_file.GetStream();
+                input_file = afs_file.Name;
+                image_list = LoadFromStream(serializer, filestream);
+                if (image_list.Count > 0)
+                {
+                    SetListFromImageList();
+                    EnableUIGroupBoxes();
+                    EnableUISaveOptions();
+                    ImageListView.Items[0].Selected = true;
+                    ImageInfo current_image = image_list.ElementAt(ImageListView.SelectedIndices[0]);
+                    UpdateTIM2PropertyList(tim2_serializer.Open(new MemoryStream(current_image.byte_array)));
+                    EnableUIImportExport();
+                    StripFileSave.Enabled = false;
+                    StripFileSaveAs.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading from AFS.\n" + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+        private void OpenAFSPicker(string input_afs)
+        {
+            List<string> filelist = new List<string>();
+            foreach (StreamEntry entry in current_afs.Entries)
+            {
+                filelist.Add(entry.Name);
+            }
+            using (var filepicker_form = new AFSFilePicker(this))
+            {
+                filepicker_form.BuildTree(Path.GetFileName(input_afs), filelist);
+                filepicker_form.ShowDialog();
+            }
+        }
         private void SetListFromImageList()
         {
             ImageListView.Items.Clear();
@@ -450,6 +493,11 @@ namespace TXBeditor
                         TXB.WriteOutputData(writer, image_list);
                     }
                 }
+
+                if (input_file != "") // to enable save after saving "as" once after afs load
+                {
+                    StripFileSave.Enabled = true;
+                }
             }
         }
 
@@ -623,7 +671,7 @@ namespace TXBeditor
             }
         }
 
-        
+
 
         private void ComboAlignmentChange(object sender, EventArgs e)
         {
@@ -666,5 +714,23 @@ namespace TXBeditor
             UpdateFromTIM2Properties();
             ImgLib_LoadImage(image_list.ElementAt(ImageListView.SelectedIndices[0]).byte_array);
         }
+
+        private void StripFileOpenAFS_Click(object sender, EventArgs e)
+        {
+            if (afs_path.Length != 0) ofd.InitialDirectory = Path.GetDirectoryName(afs_path);
+            ofd.Title = "Select AFS File";
+            ofd.Filter = "AFS Files|*.afs";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+
+                string input_afs = ofd.FileName;
+                afs_path = input_afs;
+                current_afs = new AFS(input_afs);
+                OpenAFSPicker(afs_path);
+            }
+
+        }
+
+
     }
 }

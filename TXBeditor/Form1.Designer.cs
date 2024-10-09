@@ -75,6 +75,7 @@
             TIM2PictureBox = new PictureBox();
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
+            StripFileOpenAFS = new ToolStripMenuItem();
             toolStrip1.SuspendLayout();
             StripBGContextMenu.SuspendLayout();
             GroupBoxImageList.SuspendLayout();
@@ -105,7 +106,7 @@
             // StripFile
             // 
             StripFile.AutoToolTip = false;
-            StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, toolStripSeparator2, StripFileSave, StripFileSaveAs, toolStripSeparator1, StripFileQuit });
+            StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileOpenAFS, toolStripSeparator2, StripFileSave, StripFileSaveAs, toolStripSeparator1, StripFileQuit });
             StripFile.Image = Properties.Resources.folder_go;
             StripFile.ImageTransparentColor = Color.Magenta;
             StripFile.Name = "StripFile";
@@ -116,21 +117,21 @@
             // 
             StripFileOpen.Image = Properties.Resources.page_go;
             StripFileOpen.Name = "StripFileOpen";
-            StripFileOpen.Size = new Size(121, 22);
+            StripFileOpen.Size = new Size(180, 22);
             StripFileOpen.Text = "Open...";
             StripFileOpen.Click += StripFileOpen_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(118, 6);
+            toolStripSeparator2.Size = new Size(177, 6);
             // 
             // StripFileSave
             // 
             StripFileSave.Enabled = false;
             StripFileSave.Image = Properties.Resources.page_save;
             StripFileSave.Name = "StripFileSave";
-            StripFileSave.Size = new Size(121, 22);
+            StripFileSave.Size = new Size(180, 22);
             StripFileSave.Text = "Save";
             StripFileSave.Click += StripFileSave_Click;
             // 
@@ -138,20 +139,20 @@
             // 
             StripFileSaveAs.Enabled = false;
             StripFileSaveAs.Name = "StripFileSaveAs";
-            StripFileSaveAs.Size = new Size(121, 22);
+            StripFileSaveAs.Size = new Size(180, 22);
             StripFileSaveAs.Text = "Save as...";
             StripFileSaveAs.Click += StripFileSaveAs_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(118, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // StripFileQuit
             // 
             StripFileQuit.Image = Properties.Resources.cancel;
             StripFileQuit.Name = "StripFileQuit";
-            StripFileQuit.Size = new Size(121, 22);
+            StripFileQuit.Size = new Size(180, 22);
             StripFileQuit.Text = "Quit";
             StripFileQuit.Click += StripFileQuit_Click;
             // 
@@ -547,6 +548,13 @@
             splitContainer2.SplitterDistance = 302;
             splitContainer2.TabIndex = 0;
             // 
+            // StripFileOpenAFS
+            // 
+            StripFileOpenAFS.Name = "StripFileOpenAFS";
+            StripFileOpenAFS.Size = new Size(180, 22);
+            StripFileOpenAFS.Text = "Load From AFS...";
+            StripFileOpenAFS.Click += StripFileOpenAFS_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -628,5 +636,6 @@
         private PictureBox TIM2PictureBox;
         private SplitContainer splitContainer1;
         private SplitContainer splitContainer2;
+        private ToolStripMenuItem StripFileOpenAFS;
     }
 }
