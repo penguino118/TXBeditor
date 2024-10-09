@@ -48,7 +48,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(304, 341);
             Controls.Add(TreeAFSFileList);
-            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             MinimumSize = new Size(320, 380);
