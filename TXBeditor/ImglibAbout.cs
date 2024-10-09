@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using TXBeditor.Properties;
+using TXBeditor.TXBeditor.Properties;
 
 namespace TXBeditor
 {
@@ -9,7 +9,7 @@ namespace TXBeditor
         public ImglibAbout()
         {
             InitializeComponent();
-            this.license.Lines = System.Text.RegularExpressions.Regex.Split(Properties.Resources.GPL2, "\r\n|\r|\n");
+            this.license.Lines = System.Text.RegularExpressions.Regex.Split(TXBeditor.Properties.Resources.GPL2, "\r\n|\r|\n");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

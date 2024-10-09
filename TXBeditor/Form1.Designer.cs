@@ -181,7 +181,7 @@
             StripEditExport.Enabled = false;
             StripEditExport.Image = (Image)resources.GetObject("StripEditExport.Image");
             StripEditExport.Name = "StripEditExport";
-            StripEditExport.Size = new Size(180, 22);
+            StripEditExport.Size = new Size(166, 22);
             StripEditExport.Text = "Export to PNG";
             StripEditExport.Click += StripEditExport_Click;
             // 
@@ -190,21 +190,21 @@
             StripEditImport.Enabled = false;
             StripEditImport.Image = (Image)resources.GetObject("StripEditImport.Image");
             StripEditImport.Name = "StripEditImport";
-            StripEditImport.Size = new Size(180, 22);
+            StripEditImport.Size = new Size(166, 22);
             StripEditImport.Text = "Import from PNG";
             StripEditImport.Click += StripEditImport_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(177, 6);
+            toolStripSeparator3.Size = new Size(163, 6);
             // 
             // StripEditExportAll
             // 
             StripEditExportAll.Enabled = false;
             StripEditExportAll.Image = TXBeditor.Properties.Resources.folder_picture;
             StripEditExportAll.Name = "StripEditExportAll";
-            StripEditExportAll.Size = new Size(180, 22);
+            StripEditExportAll.Size = new Size(166, 22);
             StripEditExportAll.Text = "Batch Export";
             StripEditExportAll.Click += StripEditExportAll_Click;
             // 
@@ -213,7 +213,7 @@
             StripEditImportAll.Enabled = false;
             StripEditImportAll.Image = TXBeditor.Properties.Resources.folder_magnify;
             StripEditImportAll.Name = "StripEditImportAll";
-            StripEditImportAll.Size = new Size(180, 22);
+            StripEditImportAll.Size = new Size(166, 22);
             StripEditImportAll.Text = "Batch Import";
             StripEditImportAll.Click += EditStripImportAll_Click;
             // 
@@ -569,6 +569,7 @@
             MinimumSize = new Size(768, 573);
             Name = "Form1";
             Text = " TXB Editor";
+            FormClosing += Form1_FormClosing;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             StripBGContextMenu.ResumeLayout(false);

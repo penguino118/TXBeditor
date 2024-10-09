@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TXBeditor.Properties {
+namespace TXBeditor.TXBeditor.Properties
+{
     using System;
     
     
