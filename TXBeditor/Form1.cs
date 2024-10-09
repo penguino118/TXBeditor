@@ -1,20 +1,11 @@
-using System.Collections;
-using System.IO;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows.Forms;
-using Rainbow.ImgLib;
+using AFSLib;
 using Rainbow.ImgLib.Formats;
 using Rainbow.ImgLib.Formats.Implementation;
 using Rainbow.ImgLib.Formats.Serialization;
-using Rainbow.ImgLib.Formats.Serialization.Metadata;
-using TXBeditor.TXBEditor;
-using static TXBeditor.TXBEditor.TXB;
-using static Rainbow.ImgLib.Formats.Implementation.TIM2Texture;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-using AFSLib;
 using TXBeditor.TXBeditor;
+using TXBeditor.TXBEditor;
+using static Rainbow.ImgLib.Formats.Implementation.TIM2Texture;
+using static TXBeditor.TXBEditor.TXB;
 
 
 namespace TXBeditor
