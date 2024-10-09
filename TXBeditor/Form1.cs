@@ -494,6 +494,7 @@ namespace TXBeditor
                     }
                 }
 
+                input_file = output_file;
                 if (input_file != "") // to enable save after saving "as" once after afs load
                 {
                     StripFileSave.Enabled = true;
