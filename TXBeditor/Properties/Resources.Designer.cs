@@ -8,8 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TXBeditor.TXBeditor.Properties
-{
+namespace TXBeditor.Properties {
     using System;
     
     
@@ -278,6 +277,16 @@ namespace TXBeditor.TXBeditor.Properties
         internal static System.Drawing.Bitmap picture_key {
             get {
                 object obj = ResourceManager.GetObject("picture_key", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap picture_save {
+            get {
+                object obj = ResourceManager.GetObject("picture_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

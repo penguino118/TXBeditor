@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <RootNamespace>TXBeditor</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

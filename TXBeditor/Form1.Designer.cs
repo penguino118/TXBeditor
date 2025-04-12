@@ -56,7 +56,6 @@
             StripBGContextMenu = new ContextMenuStrip(components);
             BGColorStripDefault = new ToolStripMenuItem();
             BGColorStripCustom = new ToolStripMenuItem();
-            GroupBoxImageList = new GroupBox();
             ImageListView = new ListView();
             image_index = new ColumnHeader();
             image_id = new ColumnHeader();
@@ -74,24 +73,27 @@
             ViewZoomAdd = new Button();
             BGColorButton = new Button();
             TIM2PictureBox = new PictureBox();
-            splitContainer1 = new SplitContainer();
-            splitContainer2 = new SplitContainer();
+            MainSplitContainer = new SplitContainer();
+            LeftMainContainer = new SplitContainer();
+            ImageListLayout = new TableLayoutPanel();
+            panel1 = new Panel();
             toolStrip1.SuspendLayout();
             StripBGContextMenu.SuspendLayout();
-            GroupBoxImageList.SuspendLayout();
             GroupBoxTXB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CurrImgIDField).BeginInit();
             GroupBoxTIM2.SuspendLayout();
             GroupBoxView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TIM2PictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
-            splitContainer2.Panel1.SuspendLayout();
-            splitContainer2.Panel2.SuspendLayout();
-            splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)MainSplitContainer).BeginInit();
+            MainSplitContainer.Panel1.SuspendLayout();
+            MainSplitContainer.Panel2.SuspendLayout();
+            MainSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)LeftMainContainer).BeginInit();
+            LeftMainContainer.Panel1.SuspendLayout();
+            LeftMainContainer.Panel2.SuspendLayout();
+            LeftMainContainer.SuspendLayout();
+            ImageListLayout.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
@@ -107,7 +109,7 @@
             // 
             StripFile.AutoToolTip = false;
             StripFile.DropDownItems.AddRange(new ToolStripItem[] { StripFileOpen, StripFileOpenAFS, toolStripSeparator2, StripFileSave, StripFileSaveAs, toolStripSeparator1, StripFileQuit });
-            StripFile.Image = TXBeditor.Properties.Resources.folder_go;
+            StripFile.Image = Properties.Resources.folder_go;
             StripFile.ImageTransparentColor = Color.Magenta;
             StripFile.Name = "StripFile";
             StripFile.Size = new Size(54, 22);
@@ -115,7 +117,7 @@
             // 
             // StripFileOpen
             // 
-            StripFileOpen.Image = TXBeditor.Properties.Resources.page_go;
+            StripFileOpen.Image = Properties.Resources.page_go;
             StripFileOpen.Name = "StripFileOpen";
             StripFileOpen.ShortcutKeys = Keys.Control | Keys.O;
             StripFileOpen.Size = new Size(184, 22);
@@ -137,7 +139,7 @@
             // StripFileSave
             // 
             StripFileSave.Enabled = false;
-            StripFileSave.Image = TXBeditor.Properties.Resources.page_save;
+            StripFileSave.Image = Properties.Resources.page_save;
             StripFileSave.Name = "StripFileSave";
             StripFileSave.ShortcutKeys = Keys.Control | Keys.S;
             StripFileSave.Size = new Size(184, 22);
@@ -160,7 +162,7 @@
             // 
             // StripFileQuit
             // 
-            StripFileQuit.Image = TXBeditor.Properties.Resources.cancel;
+            StripFileQuit.Image = Properties.Resources.cancel;
             StripFileQuit.Name = "StripFileQuit";
             StripFileQuit.Size = new Size(184, 22);
             StripFileQuit.Text = "Quit";
@@ -170,7 +172,7 @@
             // 
             StripEdit.AutoToolTip = false;
             StripEdit.DropDownItems.AddRange(new ToolStripItem[] { StripEditExport, StripEditImport, toolStripSeparator3, StripEditExportAll, StripEditImportAll });
-            StripEdit.Image = TXBeditor.Properties.Resources.picture_edit;
+            StripEdit.Image = Properties.Resources.picture_edit;
             StripEdit.ImageTransparentColor = Color.Magenta;
             StripEdit.Name = "StripEdit";
             StripEdit.Size = new Size(56, 22);
@@ -202,7 +204,7 @@
             // StripEditExportAll
             // 
             StripEditExportAll.Enabled = false;
-            StripEditExportAll.Image = TXBeditor.Properties.Resources.folder_picture;
+            StripEditExportAll.Image = Properties.Resources.folder_picture;
             StripEditExportAll.Name = "StripEditExportAll";
             StripEditExportAll.Size = new Size(166, 22);
             StripEditExportAll.Text = "Batch Export";
@@ -211,7 +213,7 @@
             // StripEditImportAll
             // 
             StripEditImportAll.Enabled = false;
-            StripEditImportAll.Image = TXBeditor.Properties.Resources.folder_magnify;
+            StripEditImportAll.Image = Properties.Resources.folder_magnify;
             StripEditImportAll.Name = "StripEditImportAll";
             StripEditImportAll.Size = new Size(166, 22);
             StripEditImportAll.Text = "Batch Import";
@@ -221,7 +223,7 @@
             // 
             StripHelp.AutoToolTip = false;
             StripHelp.DropDownItems.AddRange(new ToolStripItem[] { StripHelpImgLib });
-            StripHelp.Image = TXBeditor.Properties.Resources.information;
+            StripHelp.Image = Properties.Resources.information;
             StripHelp.ImageTransparentColor = Color.Magenta;
             StripHelp.Name = "StripHelp";
             StripHelp.Size = new Size(61, 22);
@@ -237,8 +239,8 @@
             // ImageListPushUp
             // 
             ImageListPushUp.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ImageListPushUp.Image = TXBeditor.Properties.Resources.arrow_up;
-            ImageListPushUp.Location = new Point(203, 184);
+            ImageListPushUp.Image = Properties.Resources.arrow_up;
+            ImageListPushUp.Location = new Point(1, 192);
             ImageListPushUp.Name = "ImageListPushUp";
             ImageListPushUp.Size = new Size(26, 50);
             ImageListPushUp.TabIndex = 9;
@@ -249,12 +251,11 @@
             // ImageListRemove
             // 
             ImageListRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ImageListRemove.Image = TXBeditor.Properties.Resources.image_delete;
-            ImageListRemove.Location = new Point(203, 70);
+            ImageListRemove.Image = Properties.Resources.image_delete;
+            ImageListRemove.Location = new Point(1, 56);
             ImageListRemove.Name = "ImageListRemove";
             ImageListRemove.Size = new Size(26, 50);
             ImageListRemove.TabIndex = 14;
-            ImageListRemove.Text = "-";
             toolTip1.SetToolTip(ImageListRemove, "Remove the currently selected texture from the image list");
             ImageListRemove.UseVisualStyleBackColor = true;
             ImageListRemove.Click += OnImageListRemoved;
@@ -262,8 +263,8 @@
             // ImageListPushDown
             // 
             ImageListPushDown.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ImageListPushDown.Image = TXBeditor.Properties.Resources.arrow_down;
-            ImageListPushDown.Location = new Point(203, 240);
+            ImageListPushDown.Image = Properties.Resources.arrow_down;
+            ImageListPushDown.Location = new Point(1, 248);
             ImageListPushDown.Name = "ImageListPushDown";
             ImageListPushDown.Size = new Size(26, 50);
             ImageListPushDown.TabIndex = 10;
@@ -274,8 +275,8 @@
             // ImageListAdd
             // 
             ImageListAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ImageListAdd.Image = TXBeditor.Properties.Resources.image_add;
-            ImageListAdd.Location = new Point(203, 14);
+            ImageListAdd.Image = Properties.Resources.image_add;
+            ImageListAdd.Location = new Point(1, 0);
             ImageListAdd.Name = "ImageListAdd";
             ImageListAdd.Size = new Size(26, 50);
             ImageListAdd.TabIndex = 13;
@@ -286,8 +287,8 @@
             // ImageListSave
             // 
             ImageListSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ImageListSave.Image = (Image)resources.GetObject("ImageListSave.Image");
-            ImageListSave.Location = new Point(203, 126);
+            ImageListSave.Image = Properties.Resources.picture_save;
+            ImageListSave.Location = new Point(1, 124);
             ImageListSave.Name = "ImageListSave";
             ImageListSave.Size = new Size(26, 50);
             ImageListSave.TabIndex = 15;
@@ -304,7 +305,6 @@
             // 
             // BGColorStripDefault
             // 
-            BGColorStripDefault.Image = TXBeditor.Properties.Resources.arrow_undo;
             BGColorStripDefault.Name = "BGColorStripDefault";
             BGColorStripDefault.Size = new Size(144, 22);
             BGColorStripDefault.Text = "Default Color";
@@ -312,40 +312,22 @@
             // 
             // BGColorStripCustom
             // 
-            BGColorStripCustom.Image = TXBeditor.Properties.Resources.color_swatch;
             BGColorStripCustom.Name = "BGColorStripCustom";
             BGColorStripCustom.Size = new Size(144, 22);
             BGColorStripCustom.Text = "Custom...";
             BGColorStripCustom.Click += BGColorStripCustom_Click;
             // 
-            // GroupBoxImageList
-            // 
-            GroupBoxImageList.AutoSize = true;
-            GroupBoxImageList.Controls.Add(ImageListSave);
-            GroupBoxImageList.Controls.Add(ImageListView);
-            GroupBoxImageList.Controls.Add(ImageListAdd);
-            GroupBoxImageList.Controls.Add(ImageListPushDown);
-            GroupBoxImageList.Controls.Add(ImageListRemove);
-            GroupBoxImageList.Controls.Add(ImageListPushUp);
-            GroupBoxImageList.Dock = DockStyle.Fill;
-            GroupBoxImageList.Enabled = false;
-            GroupBoxImageList.Location = new Point(3, 0);
-            GroupBoxImageList.Name = "GroupBoxImageList";
-            GroupBoxImageList.Size = new Size(233, 302);
-            GroupBoxImageList.TabIndex = 18;
-            GroupBoxImageList.TabStop = false;
-            // 
             // ImageListView
             // 
             ImageListView.AllowColumnReorder = true;
-            ImageListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ImageListView.Columns.AddRange(new ColumnHeader[] { image_index, image_id });
+            ImageListView.Dock = DockStyle.Fill;
             ImageListView.FullRowSelect = true;
             ImageListView.GridLines = true;
-            ImageListView.Location = new Point(6, 14);
+            ImageListView.Location = new Point(3, 3);
             ImageListView.MultiSelect = false;
             ImageListView.Name = "ImageListView";
-            ImageListView.Size = new Size(191, 276);
+            ImageListView.Size = new Size(192, 298);
             ImageListView.TabIndex = 1;
             ImageListView.UseCompatibleStateImageBehavior = false;
             ImageListView.View = View.Details;
@@ -464,7 +446,7 @@
             // 
             // ViewZoomReset
             // 
-            ViewZoomReset.Image = TXBeditor.Properties.Resources.zoom;
+            ViewZoomReset.Image = Properties.Resources.zoom;
             ViewZoomReset.Location = new Point(169, 22);
             ViewZoomReset.Name = "ViewZoomReset";
             ViewZoomReset.Size = new Size(26, 26);
@@ -474,7 +456,7 @@
             // 
             // ViewZoomSubs
             // 
-            ViewZoomSubs.Image = TXBeditor.Properties.Resources.zoom_out;
+            ViewZoomSubs.Image = Properties.Resources.zoom_out;
             ViewZoomSubs.Location = new Point(139, 22);
             ViewZoomSubs.Name = "ViewZoomSubs";
             ViewZoomSubs.Size = new Size(26, 26);
@@ -484,7 +466,7 @@
             // 
             // ViewZoomAdd
             // 
-            ViewZoomAdd.Image = TXBeditor.Properties.Resources.zoom_in;
+            ViewZoomAdd.Image = Properties.Resources.zoom_in;
             ViewZoomAdd.Location = new Point(198, 22);
             ViewZoomAdd.Name = "ViewZoomAdd";
             ViewZoomAdd.Size = new Size(26, 26);
@@ -513,50 +495,84 @@
             TIM2PictureBox.TabIndex = 3;
             TIM2PictureBox.TabStop = false;
             // 
-            // splitContainer1
+            // MainSplitContainer
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.FixedPanel = FixedPanel.Panel1;
-            splitContainer1.IsSplitterFixed = true;
-            splitContainer1.Location = new Point(0, 25);
-            splitContainer1.Name = "splitContainer1";
+            MainSplitContainer.Dock = DockStyle.Fill;
+            MainSplitContainer.FixedPanel = FixedPanel.Panel1;
+            MainSplitContainer.IsSplitterFixed = true;
+            MainSplitContainer.Location = new Point(0, 25);
+            MainSplitContainer.Name = "MainSplitContainer";
             // 
-            // splitContainer1.Panel1
+            // MainSplitContainer.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(splitContainer2);
-            splitContainer1.Panel1MinSize = 236;
+            MainSplitContainer.Panel1.Controls.Add(LeftMainContainer);
+            MainSplitContainer.Panel1MinSize = 236;
             // 
-            // splitContainer1.Panel2
+            // MainSplitContainer.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(TIM2PictureBox);
-            splitContainer1.Panel2.Margin = new Padding(0, 0, 5, 5);
-            splitContainer1.Size = new Size(752, 511);
-            splitContainer1.SplitterDistance = 236;
-            splitContainer1.TabIndex = 20;
+            MainSplitContainer.Panel2.Controls.Add(TIM2PictureBox);
+            MainSplitContainer.Panel2.Margin = new Padding(0, 0, 5, 5);
+            MainSplitContainer.Panel2MinSize = 30;
+            MainSplitContainer.Size = new Size(752, 511);
+            MainSplitContainer.SplitterDistance = 236;
+            MainSplitContainer.TabIndex = 20;
             // 
-            // splitContainer2
+            // LeftMainContainer
             // 
-            splitContainer2.Dock = DockStyle.Fill;
-            splitContainer2.FixedPanel = FixedPanel.Panel2;
-            splitContainer2.Location = new Point(0, 0);
-            splitContainer2.Name = "splitContainer2";
-            splitContainer2.Orientation = Orientation.Horizontal;
+            LeftMainContainer.Dock = DockStyle.Fill;
+            LeftMainContainer.FixedPanel = FixedPanel.Panel2;
+            LeftMainContainer.IsSplitterFixed = true;
+            LeftMainContainer.Location = new Point(0, 0);
+            LeftMainContainer.Name = "LeftMainContainer";
+            LeftMainContainer.Orientation = Orientation.Horizontal;
             // 
-            // splitContainer2.Panel1
+            // LeftMainContainer.Panel1
             // 
-            splitContainer2.Panel1.Controls.Add(GroupBoxImageList);
-            splitContainer2.Panel1.Padding = new Padding(3, 0, 0, 0);
-            splitContainer2.Panel1MinSize = 30;
+            LeftMainContainer.Panel1.Controls.Add(ImageListLayout);
+            LeftMainContainer.Panel1.Padding = new Padding(3, 0, 0, 0);
+            LeftMainContainer.Panel1MinSize = 302;
             // 
-            // splitContainer2.Panel2
+            // LeftMainContainer.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(GroupBoxTXB);
-            splitContainer2.Panel2.Controls.Add(GroupBoxTIM2);
-            splitContainer2.Panel2.Controls.Add(GroupBoxView);
-            splitContainer2.Panel2MinSize = 205;
-            splitContainer2.Size = new Size(236, 511);
-            splitContainer2.SplitterDistance = 302;
-            splitContainer2.TabIndex = 0;
+            LeftMainContainer.Panel2.Controls.Add(GroupBoxTXB);
+            LeftMainContainer.Panel2.Controls.Add(GroupBoxTIM2);
+            LeftMainContainer.Panel2.Controls.Add(GroupBoxView);
+            LeftMainContainer.Panel2MinSize = 205;
+            LeftMainContainer.Size = new Size(236, 511);
+            LeftMainContainer.SplitterDistance = 304;
+            LeftMainContainer.SplitterWidth = 2;
+            LeftMainContainer.TabIndex = 0;
+            // 
+            // ImageListLayout
+            // 
+            ImageListLayout.ColumnCount = 2;
+            ImageListLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 84.97854F));
+            ImageListLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.02146F));
+            ImageListLayout.Controls.Add(ImageListView, 0, 0);
+            ImageListLayout.Controls.Add(panel1, 1, 0);
+            ImageListLayout.Dock = DockStyle.Fill;
+            ImageListLayout.Enabled = false;
+            ImageListLayout.Location = new Point(3, 0);
+            ImageListLayout.Name = "ImageListLayout";
+            ImageListLayout.RowCount = 1;
+            ImageListLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            ImageListLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ImageListLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            ImageListLayout.Size = new Size(233, 304);
+            ImageListLayout.TabIndex = 20;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(ImageListPushDown);
+            panel1.Controls.Add(ImageListSave);
+            panel1.Controls.Add(ImageListRemove);
+            panel1.Controls.Add(ImageListPushUp);
+            panel1.Controls.Add(ImageListAdd);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(201, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(29, 298);
+            panel1.TabIndex = 2;
             // 
             // Form1
             // 
@@ -564,16 +580,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(752, 536);
-            Controls.Add(splitContainer1);
+            Controls.Add(MainSplitContainer);
             Controls.Add(toolStrip1);
-            MinimumSize = new Size(768, 573);
+            MinimumSize = new Size(768, 575);
             Name = "Form1";
             Text = " TXB Editor";
             FormClosing += Form1_FormClosing;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             StripBGContextMenu.ResumeLayout(false);
-            GroupBoxImageList.ResumeLayout(false);
             GroupBoxTXB.ResumeLayout(false);
             GroupBoxTXB.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CurrImgIDField).EndInit();
@@ -581,15 +596,16 @@
             GroupBoxTIM2.PerformLayout();
             GroupBoxView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)TIM2PictureBox).EndInit();
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
-            splitContainer2.Panel1.ResumeLayout(false);
-            splitContainer2.Panel1.PerformLayout();
-            splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
-            splitContainer2.ResumeLayout(false);
+            MainSplitContainer.Panel1.ResumeLayout(false);
+            MainSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)MainSplitContainer).EndInit();
+            MainSplitContainer.ResumeLayout(false);
+            LeftMainContainer.Panel1.ResumeLayout(false);
+            LeftMainContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)LeftMainContainer).EndInit();
+            LeftMainContainer.ResumeLayout(false);
+            ImageListLayout.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -615,7 +631,6 @@
         private ContextMenuStrip StripBGContextMenu;
         private ToolStripMenuItem BGColorStripDefault;
         private ToolStripMenuItem BGColorStripCustom;
-        private GroupBox GroupBoxImageList;
         private Button ImageListSave;
         private ListView ImageListView;
         private ColumnHeader image_index;
@@ -638,8 +653,10 @@
         private Button ViewZoomAdd;
         private Button BGColorButton;
         private PictureBox TIM2PictureBox;
-        private SplitContainer splitContainer1;
-        private SplitContainer splitContainer2;
+        private SplitContainer MainSplitContainer;
+        private SplitContainer LeftMainContainer;
         private ToolStripMenuItem StripFileOpenAFS;
+        private TableLayoutPanel ImageListLayout;
+        private Panel panel1;
     }
 }
